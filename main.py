@@ -40,7 +40,7 @@ def main():
     EPOCHES = 50
     model.train()
     for ep in range(EPOCHES):
-        batch_id = 1
+        batch_id = 0
         correct, total, total_loss = 0, 0, 0.
         for images, labels in train_loader:
             optimizer.zero_grad()
@@ -57,13 +57,10 @@ def main():
             total_loss += loss
             loss.backward()
             optimizer.step()
-            print('Epoch {}, batch {}, loss: {}, accuracy: {}'.format(ep + 1,
-                                                                      batch_id,
-                                                                      total_loss / batch_id,
-                                                                      accuracy))
+            
             batch_id += 1
         scheduler.step(ep)
-        print('Total loss for epoch {}: {}'.format(ep + 1, total_loss))
+        print('Epoch: {}, Loss: {}, Accuracy: {}'.format(ep + 1, total_loss / batch_id, accuracy))
 
     # Eval
     model.eval()
